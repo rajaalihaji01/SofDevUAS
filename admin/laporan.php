@@ -694,6 +694,24 @@ $total = mysqli_num_rows($query);
                                     Reset
 
                                 </a>
+                                <div class="float-right">
+
+                                    <div class="btn-group shadow-sm">
+
+
+                                        <a
+                                            href="export_excel_laporan.php?mulai=<?= urlencode($mulai) ?>&selesai=<?= urlencode($selesai) ?>"
+                                            class="btn btn-success <?= (!$mulai || !$selesai) ? 'disabled' : '' ?>"
+                                        >
+
+                                            <i class="fas fa-file-excel"></i>
+
+                                            Excel
+
+                                        </a>
+                                    </div>
+
+                                </div>
 
                             </div>
 
