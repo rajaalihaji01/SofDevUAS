@@ -709,6 +709,17 @@ $total = mysqli_num_rows($query);
                                             Excel
 
                                         </a>
+                                        <a
+                                            href="export_pdf_laporan.php?mulai=<?= urlencode($mulai) ?>&selesai=<?= urlencode($selesai) ?>"
+                                            class="btn btn-danger <?= (!$mulai || !$selesai) ? 'disabled' : '' ?>"
+                                            target="_blank"
+                                        >
+
+                                            <i class="fas fa-file-pdf"></i>
+
+                                            PDF
+
+                                        </a>
                                     </div>
 
                                 </div>
