@@ -820,11 +820,14 @@ $total = mysqli_num_rows($query);
                                                             <?= date('H:i', strtotime($d['waktu_datang'])) ?> WIB
                                                         </div>
                                                     </td>
-                                                     <td class="text-center">
-                                        <a href="edit_tamu.php?id=<?= (int)$d['id'] ?>" class="btn btn-sm btn-warning btn-action" title="Edit Data">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="edit_tamu.php?id=<?= (int)$d['id'] ?>" class="btn btn-sm btn-warning btn-action" title="Edit Data">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                    </td>
+                                                    <a href="hapus_tamu.php?id=<?= (int)$d['id'] ?>" class="btn btn-sm btn-danger btn-action" title="Hapus Data" onclick="return confirm('Apakah Anda yakin ingin menghapus data tamu ini?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
 
                                                 </tr>
 
