@@ -614,8 +614,88 @@ $total = mysqli_num_rows($query);
             <!-- ==========================================================
                  ATUR PERIODE LAPORAN
             ========================================================== -->
+            <div class="card card-primary card-outline shadow-sm mb-4">
 
 
+                <div class="card-header bg-light">
+
+                    <h3 class="card-title text-primary font-weight-bold">
+
+                        <i class="fas fa-filter mr-1"></i>
+
+                        Atur Periode Laporan
+
+                    </h3>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <form method="GET">
+
+                        <div class="row align-items-end">
+
+
+                            <div class="col-md-3">
+
+                                <label class="small font-weight-bold">
+
+                                    Dari Tanggal
+
+                                </label>
+
+                                <input
+                                    type="date"
+                                    name="mulai"
+                                    value="<?= htmlspecialchars($mulai) ?>"
+                                    class="form-control shadow-sm"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-3">
+
+                                <label class="small font-weight-bold">
+
+                                    Sampai Tanggal
+
+                                </label>
+
+                                <input
+                                    type="date"
+                                    name="selesai"
+                                    value="<?= htmlspecialchars($selesai) ?>"
+                                    class="form-control shadow-sm"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6 mt-3 mt-md-0">
+
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary px-4 shadow-sm"
+                                >
+
+                                    <i class="fas fa-search mr-1"></i>
+
+                                    Tampilkan
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
 
             <!-- ==========================================================
                  TABEL REKAPITULASI KUNJUNGAN
