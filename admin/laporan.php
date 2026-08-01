@@ -446,6 +446,29 @@ $total = mysqli_num_rows($query);
                                 <p>Laporan</p>
                             </a>
                         </li>
+
+
+                        <!-- ==================================================
+                     HEADER MENU SISTEM
+                ================================================== -->
+
+                        <li class="nav-header">
+                            Sistem
+                        </li>
+
+
+                        <!-- ==================================================
+                     MENU LOG ACTIVITY
+                ================================================== -->
+
+                        <li class="nav-item">
+                            <a href="log_activity.php" class="nav-link <?= ($halaman == 'log_activity.php') ? 'active' : '' ?>">
+                                <i class="nav-icon fas fa-list-alt"></i>
+                                <p>Log Activity</p>
+                            </a>
+                        </li>
+
+
                         <!-- ==================================================
                      MENU LOGOUT
                 ================================================== -->
@@ -820,14 +843,15 @@ $total = mysqli_num_rows($query);
                                                             <?= date('H:i', strtotime($d['waktu_datang'])) ?> WIB
                                                         </div>
                                                     </td>
+
                                                     <td class="text-center">
                                                         <a href="edit_tamu.php?id=<?= (int)$d['id'] ?>" class="btn btn-sm btn-warning btn-action" title="Edit Data">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
+                                                        <a href="hapus_tamu.php?id=<?= (int)$d['id'] ?>" class="btn btn-sm btn-danger btn-action" title="Hapus Data" onclick="return confirm('Apakah Anda yakin ingin menghapus data tamu ini?')">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
                                                     </td>
-                                                    <a href="hapus_tamu.php?id=<?= (int)$d['id'] ?>" class="btn btn-sm btn-danger btn-action" title="Hapus Data" onclick="return confirm('Apakah Anda yakin ingin menghapus data tamu ini?')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
 
                                                 </tr>
 
