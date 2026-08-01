@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include "config/koneksi.php";
 
 $sukses = false;
@@ -50,6 +51,33 @@ body{
     font-weight:600;
     text-align:center;
     border-radius:15px 15px 0 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.btn-logout{
+    position:absolute;
+    top:0;
+    right:0;
+    height:100%;
+    display:flex;
+    align-items:center;
+    background:rgba(0,0,0,.12);
+    color:white;
+    border:none;
+    border-left:1px solid rgba(255,255,255,.3);
+    border-radius:0 15px 0 0;
+    padding:0 20px;
+    font-size:13px;
+    font-weight:500;
+    text-decoration:none;
+    transition:.2s;
+}
+
+.btn-logout:hover{
+    background:rgba(255,255,255,.3);
+    color:white;
 }
 
 /* INPUT */
@@ -112,7 +140,10 @@ body{
 <div class="card">
 
 <div class="card-header">
-    <i class="fas fa-book"></i> Input Buku Tamu
+    <span><i class="fas fa-book"></i> Input Buku Tamu</span>
+    <a href="auth/logout.php" class="btn-logout" onclick="return confirm('Yakin ingin keluar?');">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
 </div>
 
 <div class="card-body">
@@ -126,8 +157,8 @@ body{
     ✅ Data tamu berhasil ditambahkan!
 </div>
 
-<div class="text-center mb-3">
-    <a href="login.php" class="btn btn-primary">
+<div class="text-center mb-5">
+    <a href="auth/logout.php" class="btn btn-primary">
         ⬅ Back to Login Form
     </a>
 </div>
