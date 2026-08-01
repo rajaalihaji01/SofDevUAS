@@ -222,6 +222,31 @@ td:nth-child(3), td:nth-child(4){
     margin-top:15px;
     padding-top:10px;
 }
+
+/* ===== SEARCH BOX ===== */
+.search-box{
+    position:relative;
+    width:260px;
+}
+.search-box input{
+    border-radius:10px;
+    padding-left:38px;
+    height:40px;
+    border:1px solid #dee2e6;
+    background:#f8f9fa;
+}
+.search-box input:focus{
+    background:#fff;
+    box-shadow:0 0 0 2px rgba(30,58,138,.15);
+    border-color:#1e3a8a;
+}
+.search-box i{
+    position:absolute;
+    left:14px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#94a3b8;
+}
 </style>
 
 </head>
@@ -348,11 +373,16 @@ td:nth-child(3), td:nth-child(4){
     </div>
 </div>
 <div class="card shadow">
-<div class="card-header d-flex align-items-center">
+<div class="card-header d-flex align-items-center flex-wrap" style="gap:12px;">
 
-<h4 class="m-0">Data Pegawai</h4>
+<h4 class="m-0 mr-auto">Data Pegawai</h4>
 
-<button class="btn btn-primary ml-auto" data-toggle="modal" data-target="#tambah">
+<div class="search-box">
+    <i class="fas fa-search"></i>
+    <input type="text" id="customSearch" class="form-control" placeholder="Cari NIP, nama, atau jabatan...">
+</div>
+
+<button class="btn btn-primary" data-toggle="modal" data-target="#tambah">
 <i class="fas fa-plus"></i> Data Baru
 </button>
 
@@ -476,11 +506,17 @@ $(function () {
 });
 </script>
 <script>
+var tabelPegawai;
 $(function () {
-    $("#tabel").DataTable({
+    tabelPegawai = $("#tabel").DataTable({
         "responsive": true,
         "autoWidth": false,
         "dom": '<"row"<"col-md-6"l>>rt<"row"<"col-md-6"i><"col-md-6 text-right"p>>'
+    });
+
+    // Search kustom terhubung ke DataTables
+    $('#customSearch').on('keyup', function () {
+        tabelPegawai.search(this.value).draw();
     });
 });
 function hapusData(id) {
