@@ -145,7 +145,7 @@ body{
 
 <div class="card-header">
     <span><i class="fas fa-book"></i> Input Buku Tamu</span>
-    <a href="logout.php" class="btn-logout" onclick="return confirm('Yakin ingin keluar?');">
+    <a href="index.php" class="btn-logout" onclick="return confirm('Yakin ingin keluar?');">
         <i class="fas fa-sign-out-alt"></i>&nbsp; Logout
     </a>
 </div>
@@ -162,7 +162,7 @@ body{
 </div>
 
 <div class="text-center mb-3">
-    <a href="logout.php" class="btn btn-primary">
+    <a href="index.php" class="btn btn-primary">
         ⬅ Back to Login Form
     </a>
 </div>
