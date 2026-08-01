@@ -686,6 +686,14 @@ $total = mysqli_num_rows($query);
                                     Tampilkan
 
                                 </button>
+                                <a
+                                    href="laporan.php"
+                                    class="btn btn-secondary px-3"
+                                >
+
+                                    Reset
+
+                                </a>
 
                             </div>
 
