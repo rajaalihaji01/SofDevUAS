@@ -15,8 +15,15 @@ if(isset($_POST['login'])){
         if($pass == $data['password']){
             $_SESSION['login'] = true;
             $_SESSION['user'] = $data['username'];
+            $_SESSION['role'] = $data['role'];
 
-            header("Location: admin/dashboard.php");
+            // Redirect berdasarkan role
+            if($data['role'] == 'tamu'){
+                header("Location: input_tamu_umum.php");
+            } else {
+                // admin & petugas tetap ke dashboard
+                header("Location: admin/dashboard.php");
+            }
             exit;
         } else {
             $error = "Password salah!";
