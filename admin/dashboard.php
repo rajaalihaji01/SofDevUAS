@@ -11,13 +11,13 @@ $laporan = in_array($halaman, ['laporan.php']);
 
 // CEK LOGIN
 if(!isset($_SESSION['login']) || $_SESSION['login'] !== true){
-    header("Location: ../login.php");
+    header("Location: index.php");
     exit;
 }
 
 // CEK USER
 if(!isset($_SESSION['user'])){
-    header("Location: ../login.php");
+    header("Location: index.php");
     exit;
 }
 
@@ -450,6 +450,15 @@ Lihat Semua Tamu
                     <a href="data_tamu.php" class="nav-link <?= ($halaman == 'data_tamu.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-address-book"></i>
                         <p>Daftar Tamu</p>
+                    </a>
+                </li>
+
+                <li class="nav-header">Sistem</li>
+
+                <li class="nav-item">
+                    <a href="log_activity.php" class="nav-link <?= ($halaman == 'log_activity.php') ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-list-alt"></i>
+                        <p>Log Activity</p>
                     </a>
                 </li>
 

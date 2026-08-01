@@ -4,7 +4,7 @@ include "../config/koneksi.php";
 $halaman = basename($_SERVER['PHP_SELF']);
 
 if(!isset($_SESSION['login'])){
-    header("Location: ../login.php");
+    header("Location: ../index.php");
     exit;
 }
 

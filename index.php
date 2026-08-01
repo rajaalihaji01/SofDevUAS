@@ -1,6 +1,7 @@
 <?php 
 session_start();
 include "config/koneksi.php";
+include "config/log_helper.php";
 
 if(isset($_POST['login'])){
     $user = mysqli_real_escape_string($conn, $_POST['username']);
@@ -16,6 +17,8 @@ if(isset($_POST['login'])){
             $_SESSION['login'] = true;
             $_SESSION['user'] = $data['username'];
             $_SESSION['role'] = $data['role'];
+
+            catat_log($conn, $data['username'], $data['role'], 'Login', 'Berhasil login ke sistem');
 
             // Redirect berdasarkan role
             if($data['role'] == 'tamu'){

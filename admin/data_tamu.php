@@ -1,5 +1,7 @@
 <?php
+session_start();
 include "../config/koneksi.php";
+include "../config/log_helper.php";
 $halaman = basename($_SERVER['PHP_SELF']);
 
 /* EDIT */
@@ -19,13 +21,22 @@ if(isset($_POST['edit'])){
     bertemu='$bertemu'
     WHERE id='$id'");
 
+    catat_log($conn, $_SESSION['user'] ?? 'admin', $_SESSION['role'] ?? 'admin', 'Edit Data', "Mengubah data tamu: $nama ($instansi)");
+
     header("Location: data_tamu.php");
 }
 
 /* HAPUS */
 if(isset($_GET['hapus'])){
     $id = $_GET['hapus'];
+
+    $cek = mysqli_fetch_assoc(mysqli_query($conn, "SELECT nama FROM tamu WHERE id='$id'"));
+    $nama_hapus = $cek['nama'] ?? '-';
+
     mysqli_query($conn,"DELETE FROM tamu WHERE id='$id'");
+
+    catat_log($conn, $_SESSION['user'] ?? 'admin', $_SESSION['role'] ?? 'admin', 'Hapus Data', "Menghapus data tamu: $nama_hapus");
+
     header("Location: data_tamu.php");
 }
 
@@ -280,6 +291,15 @@ if($tgl_awal != "" && $tgl_akhir != ""){
                     <a href="data_tamu.php" class="nav-link <?= ($halaman == 'data_tamu.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-address-book"></i>
                         <p>Daftar Tamu</p>
+                    </a>
+                </li>
+
+                <li class="nav-header">Sistem</li>
+
+                <li class="nav-item">
+                    <a href="log_activity.php" class="nav-link <?= ($halaman == 'log_activity.php') ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-list-alt"></i>
+                        <p>Log Activity</p>
                     </a>
                 </li>
 

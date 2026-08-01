@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "../config/koneksi.php";
+include "../config/log_helper.php";
 $halaman = basename($_SERVER['PHP_SELF']);
 
 $master = in_array($halaman, ['pegawai.php']);
@@ -8,7 +9,7 @@ $transaksi = in_array($halaman, ['data_tamu.php','input_tamu.php']);
 $laporan = in_array($halaman, ['laporan.php']);
 
 if(!isset($_SESSION['login'])){
-    header("Location: ../login.php");
+    header("Location: ../index.php");
     exit;
 }
 
@@ -20,6 +21,8 @@ if(isset($_POST['tambah'])){
 
     mysqli_query($conn,"INSERT INTO pegawai(nip,nama,jabatan) 
     VALUES('$nip','$nama','$jabatan')");
+
+    catat_log($conn, $_SESSION['user'], $_SESSION['role'] ?? 'admin', 'Tambah Data', "Menambahkan pegawai: $nama ($jabatan)");
 
     header("Location: pegawai.php");
 }
@@ -38,13 +41,22 @@ if(isset($_POST['edit'])){
         WHERE id='$id'
     ");
 
+    catat_log($conn, $_SESSION['user'], $_SESSION['role'] ?? 'admin', 'Edit Data', "Mengubah data pegawai: $nama ($jabatan)");
+
     header("Location: pegawai.php");
 }
 
 /* ================= HAPUS ================= */
 if(isset($_GET['hapus'])){
     $id = $_GET['hapus'];
+
+    $cek = mysqli_fetch_assoc(mysqli_query($conn, "SELECT nama FROM pegawai WHERE id='$id'"));
+    $nama_hapus = $cek['nama'] ?? '-';
+
     mysqli_query($conn,"DELETE FROM pegawai WHERE id='$id'");
+
+    catat_log($conn, $_SESSION['user'], $_SESSION['role'] ?? 'admin', 'Hapus Data', "Menghapus pegawai: $nama_hapus");
+
     header("Location: pegawai.php");
 }
 ?>
@@ -314,6 +326,15 @@ td:nth-child(3), td:nth-child(4){
                     <a href="data_tamu.php" class="nav-link <?= ($halaman == 'data_tamu.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-address-book"></i>
                         <p>Daftar Tamu</p>
+                    </a>
+                </li>
+
+                <li class="nav-header">Sistem</li>
+
+                <li class="nav-item">
+                    <a href="log_activity.php" class="nav-link <?= ($halaman == 'log_activity.php') ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-list-alt"></i>
+                        <p>Log Activity</p>
                     </a>
                 </li>
 

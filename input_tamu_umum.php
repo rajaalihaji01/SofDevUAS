@@ -1,6 +1,7 @@
 <?php 
 session_start();
 include "config/koneksi.php";
+include "config/log_helper.php";
 
 $sukses = false;
 
@@ -14,6 +15,8 @@ if(isset($_POST['tambah'])){
     mysqli_query($conn,"INSERT INTO tamu 
     (nama,instansi,no_hp,tujuan,bertemu,waktu_datang) 
     VALUES('$nama','$instansi','$no_hp','$tujuan','$bertemu',NOW())");
+
+    catat_log($conn, $_SESSION['user'] ?? $nama, $_SESSION['role'] ?? 'tamu', 'Tambah Data', "Mengisi buku tamu untuk bertemu $bertemu ($instansi)");
 
     $sukses = true;
 }
@@ -53,7 +56,8 @@ body{
     border-radius:15px 15px 0 0;
     display:flex;
     align-items:center;
-    justify-content:space-between;
+    position:relative;
+    padding:14px 20px;
 }
 
 .btn-logout{
@@ -76,7 +80,7 @@ body{
 }
 
 .btn-logout:hover{
-    background:rgba(255,255,255,.3);
+    background:rgba(0,0,0,.25);
     color:white;
 }
 
@@ -141,8 +145,8 @@ body{
 
 <div class="card-header">
     <span><i class="fas fa-book"></i> Input Buku Tamu</span>
-    <a href="auth/logout.php" class="btn-logout" onclick="return confirm('Yakin ingin keluar?');">
-        <i class="fas fa-sign-out-alt"></i> Logout
+    <a href="logout.php" class="btn-logout" onclick="return confirm('Yakin ingin keluar?');">
+        <i class="fas fa-sign-out-alt"></i>&nbsp; Logout
     </a>
 </div>
 
@@ -157,8 +161,8 @@ body{
     ✅ Data tamu berhasil ditambahkan!
 </div>
 
-<div class="text-center mb-5">
-    <a href="auth/logout.php" class="btn btn-primary">
+<div class="text-center mb-3">
+    <a href="logout.php" class="btn btn-primary">
         ⬅ Back to Login Form
     </a>
 </div>
