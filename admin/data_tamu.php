@@ -84,6 +84,30 @@ while($p = mysqli_fetch_array($q_pegawai)) {
         border-radius: 8px;
     }
 
+/* ===== SEARCH BOX ===== */
+.search-box{
+    position:relative;
+    width:260px;
+}
+.search-box input{
+    border-radius:50px;
+    padding-left:38px;
+    height:38px;
+    border:1px solid #dee2e6;
+    background:#fff;
+}
+.search-box input:focus{
+    box-shadow:0 0 0 2px rgba(30,58,138,.15);
+    border-color:#1e3a8a;
+}
+.search-box i{
+    position:absolute;
+    left:14px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#94a3b8;
+}
+
 /* ===== SIDEBAR ===== */
 .main-sidebar {
     background: #1e293b !important; /* Warna Slate (Biru Gelap Professional) */
@@ -259,11 +283,19 @@ while($p = mysqli_fetch_array($q_pegawai)) {
 
 <div class="content-wrapper">
     <div class="container-fluid pt-3">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="font-weight-bold">Daftar Kunjungan Tamu</h3>
-            <a href="input_tamu.php" class="btn btn-primary btn-sm rounded-pill px-3">
-                <i class="fas fa-plus mr-1"></i> Tambah Tamu
-            </a>
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap" style="gap:12px;">
+            <h3 class="font-weight-bold m-0">Daftar Kunjungan Tamu</h3>
+
+            <div class="d-flex align-items-center flex-wrap" style="gap:10px;">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="customSearch" class="form-control" placeholder="Cari nama, instansi, tujuan...">
+                </div>
+
+                <a href="input_tamu.php" class="btn btn-primary btn-sm rounded-pill px-3">
+                    <i class="fas fa-plus mr-1"></i> Tambah Tamu
+                </a>
+            </div>
         </div>
 
         <div class="card border-0 shadow-sm">
@@ -383,11 +415,12 @@ $(function () {
 </script>
 <script>
 $(document).ready(function() {
-    $("#tabelTamu").DataTable({
+    var tabelTamu = $("#tabelTamu").DataTable({
         "responsive": true,
         "lengthChange": true,
-        "searching": false,
+        "searching": true,
         "autoWidth": false,
+        "dom": '<"row"<"col-md-6"l>>rt<"row"<"col-md-6"i><"col-md-6"p>>',
         "language": {
             "lengthMenu": "Tampilkan _MENU_ baris",
             "info": "Menampilkan _START_ ke _END_ dari _TOTAL_ tamu",
@@ -396,6 +429,11 @@ $(document).ready(function() {
                 "next": "<i class='fas fa-angle-right'></i>"
             }
         }
+    });
+
+    // Search kustom terhubung ke DataTables
+    $('#customSearch').on('keyup', function () {
+        tabelTamu.search(this.value).draw();
     });
 });
 </script>
