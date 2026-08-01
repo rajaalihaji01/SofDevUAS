@@ -11,13 +11,13 @@ $laporan = in_array($halaman, ['laporan.php']);
 
 // CEK LOGIN
 if(!isset($_SESSION['login']) || $_SESSION['login'] !== true){
-    header("Location: ../login.php");
+    header("Location: index.php");
     exit;
 }
 
 // CEK USER
 if(!isset($_SESSION['user'])){
-    header("Location: ../login.php");
+    header("Location: index.php");
     exit;
 }
 
@@ -452,12 +452,25 @@ Lihat Semua Tamu
                         <p>Daftar Tamu</p>
                     </a>
                 </li>
+<<<<<<< HEAD
                 <li class="nav-item">
                     <a href="laporan.php" class="nav-link <?= ($halaman == 'laporan.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-chart-line"></i>
                         <p>Laporan</p>
                     </a>
                 </li>
+=======
+
+                <li class="nav-header">Sistem</li>
+
+                <li class="nav-item">
+                    <a href="log_activity.php" class="nav-link <?= ($halaman == 'log_activity.php') ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-list-alt"></i>
+                        <p>Log Activity</p>
+                    </a>
+                </li>
+
+>>>>>>> develop
                 <li class="nav-item mt-4 pt-2 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
                     <a href="../auth/logout.php" class="nav-link text-danger">
                         <i class="nav-icon fas fa-power-off"></i>

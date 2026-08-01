@@ -1,9 +1,10 @@
 <?php
 session_start();
 include "../config/koneksi.php";
+include "../config/log_helper.php";
 
 if(!isset($_SESSION['login'])){
-    header("Location: ../login.php");
+    header("Location: ../index.php");
     exit;
 }
 
@@ -37,6 +38,7 @@ if(isset($_POST['ganti_password'])){
 
         if(mysqli_stmt_execute($stmt)){
             $success = "Password berhasil diperbarui. Gunakan password baru Anda saat login berikutnya.";
+            catat_log($conn, $username, $_SESSION['role'] ?? 'admin', 'Ganti Password', 'Password akun berhasil diperbarui');
         } else {
             $error = "Terjadi kesalahan saat menyimpan password baru.";
         }
