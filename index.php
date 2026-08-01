@@ -41,10 +41,21 @@ body {
     margin: 0;
     height: 100vh;
     font-family: 'Poppins', sans-serif;
-    background-color: #f0f2f5;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+
+    /* Background animasi gradasi biru */
+    background: linear-gradient(-45deg, #dbeafe, #eff6ff, #bfdbfe, #e0e7ff);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+}
+
+@keyframes gradientBG {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .login-container {
@@ -59,7 +70,6 @@ body {
 
 .left {
     width: 45%;
-    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
     color: white;
     display: flex;
     justify-content: center;
@@ -67,6 +77,13 @@ body {
     text-align: center;
     padding: 40px;
     position: relative;
+
+    /* Foto Tugu Kota Dumai sebagai background */
+    background-image:
+        linear-gradient(135deg, rgba(30,58,138,.85), rgba(59,130,246,.75)),
+        url('assets/img/kotadumai.webp');
+    background-size: cover;
+    background-position: center;
 }
 
 .left::before {
@@ -80,10 +97,25 @@ body {
     border-radius: 50%;
 }
 
+.left .konten {
+    position: relative;
+    z-index: 2;
+}
+
 .left h2{
     font-weight:700;
     font-size:28px;
     margin-top:20px;
+    text-shadow: 0 2px 8px rgba(0,0,0,.35);
+}
+
+.left p{
+    text-shadow: 0 1px 4px rgba(0,0,0,.35);
+}
+
+.logo-kiri{
+    width:130px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
 }
 
 .right{
@@ -93,6 +125,31 @@ body {
     display:flex;
     flex-direction:column;
     justify-content:center;
+    position: relative;
+    overflow: hidden;
+}
+
+.right .bubble{
+    position:absolute;
+    border-radius:50%;
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    opacity:.5;
+    z-index:0;
+    animation: floatBubble 8s ease-in-out infinite;
+}
+
+.right .bubble.b1{ width:120px; height:120px; top:-40px; right:-30px; animation-delay:0s; }
+.right .bubble.b2{ width:70px;  height:70px;  bottom:20px; right:40px; animation-delay:1.5s; }
+.right .bubble.b3{ width:45px;  height:45px;  bottom:80px; left:-15px; animation-delay:.7s; }
+
+@keyframes floatBubble {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-18px) scale(1.06); }
+}
+
+.right > *{
+    position: relative;
+    z-index: 1;
 }
 
 .right h5{
@@ -142,10 +199,6 @@ body {
     box-shadow:0 5px 15px rgba(30,58,138,.3);
 }
 
-.logo-kiri{
-    width:130px;
-}
-
 .footer-text{
     margin-top:30px;
     font-size:12px;
@@ -161,7 +214,7 @@ body {
 <div class="login-container">
 
 <div class="left">
-    <div class="text-center">
+    <div class="konten text-center">
         <img src="assets/adminlte/logo_1.png" class="logo-kiri">
         <h2 class="mt-3">Buku Tamu Digital</h2>
         <p style="font-size:14px;opacity:.9;">
@@ -171,6 +224,10 @@ body {
 </div>
 
 <div class="right">
+
+<div class="bubble b1"></div>
+<div class="bubble b2"></div>
+<div class="bubble b3"></div>
 
 <div class="d-flex align-items-center mb-4">
     <img src="assets/adminlte/logo_1.png" style="width:55px;margin-right:12px;">
