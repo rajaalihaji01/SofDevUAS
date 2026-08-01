@@ -750,8 +750,6 @@ $total = mysqli_num_rows($query);
 
                                 <tr>
 
-                                    <tr>
-
                                     <th class="text-center" width="5%">
                                         No
                                     </th>
@@ -776,10 +774,6 @@ $total = mysqli_num_rows($query);
                                         Waktu Datang
                                     </th>
 
-                                    <th class="text-center" width="12%">
-                                        Aksi
-                                    </th>
-
                                 </tr>
 
                             </thead>
@@ -790,7 +784,7 @@ $total = mysqli_num_rows($query);
                                  DATA TABEL
                             ================================================== -->
 
-                            <tbody>
+                             <tbody>
 
                             <?php
 
@@ -804,40 +798,45 @@ $total = mysqli_num_rows($query);
 
                                 <tr>
 
+                                    <td class="text-center font-weight-bold text-muted">
+                                        <?= $no++ ?>
+                                    </td>
 
-                                    <!-- ==================================================
-                                         NOMOR
-                                    ================================================== -->
+                                    <td>
+                                        <div class="font-weight-bold text-dark">
+                                            <?= htmlspecialchars($d['nama']) ?>
+                                        </div>
+                                        <span class="badge badge-light border text-muted" style="font-size:11px; font-weight:normal;">
+                                            <i class="fas fa-phone-alt fa-xs mr-1"></i>
+                                            <?= htmlspecialchars($d['no_hp']) ?>
+                                        </span>
+                                    </td>
 
+                                    <td>
+                                        <span class="text-muted">
+                                            <i class="fas fa-building fa-xs mr-1"></i>
+                                            <?= htmlspecialchars($d['instansi']) ?>
+                                        </span>
+                                    </td>
 
-                                    <!-- ==================================================
-                                         NAMA TAMU & NO HP
-                                    ================================================== -->
+                                    <td>
+                                        <?= htmlspecialchars($d['tujuan']) ?>
+                                    </td>
 
+                                    <td>
+                                        <span class="badge badge-info shadow-sm">
+                                            <?= htmlspecialchars($d['bertemu']) ?>
+                                        </span>
+                                    </td>
 
-                                    <!-- ==================================================
-                                         INSTANSI
-                                    ================================================== -->
-
-
-                                    <!-- ==================================================
-                                         TUJUAN
-                                    ================================================== -->
-
-
-                                    <!-- ==================================================
-                                         BERTEMU DENGAN
-                                    ================================================== -->
-
-
-                                    <!-- ==================================================
-                                         WAKTU DATANG
-                                    ================================================== -->
-
-
-                                    <!-- ==================================================
-                                         AKSI
-                                    ================================================== -->
+                                    <td class="text-center text-sm">
+                                        <div class="text-primary font-weight-bold">
+                                            <?= date('d/m/Y', strtotime($d['waktu_datang'])) ?>
+                                        </div>
+                                        <div class="text-muted small">
+                                            <?= date('H:i', strtotime($d['waktu_datang'])) ?> WIB
+                                        </div>
+                                    </td>
 
                                 </tr>
 
@@ -853,6 +852,15 @@ $total = mysqli_num_rows($query);
                                 <!-- ==================================================
                                      JIKA DATA KOSONG
                                 ================================================== -->
+
+                                <tr>
+
+                                    <td colspan="7" class="text-center py-5 text-muted">
+                                        <i class="fas fa-folder-open fa-3x mb-3 d-block opacity-50"></i>
+                                        Belum ada data kunjungan.
+                                    </td>
+
+                                </tr>
 
 
                             <?php
