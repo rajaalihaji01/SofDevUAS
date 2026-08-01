@@ -181,6 +181,13 @@ body{ background:#f4f7fb; }
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="laporan.php" class="nav-link <?= ($halaman == 'laporan.php') ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-chart-line"></i>
+                        <p>Laporan</p>
+                    </a>
+                </li>
+
                 <li class="nav-header">Sistem</li>
 
                 <li class="nav-item">
