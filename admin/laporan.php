@@ -581,9 +581,36 @@ $total = mysqli_num_rows($query);
             <!-- ==========================================================
                  TOTAL KUNJUNGAN TERDATA
             ========================================================== -->
+            <div class="row">
+
+                <div class="col-lg-3 col-6">
+
+                    <div class="small-box bg-primary shadow">
+
+                        <div class="inner">
+
+                            <h3>
+                                <?= $total ?>
+                            </h3>
+
+                            <p>
+                                Total Kunjungan Terdata
+                            </p>
+
+                        </div>
 
 
+                        <div class="icon">
 
+                            <i class="fas fa-users"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
             <!-- ==========================================================
                  ATUR PERIODE LAPORAN
             ========================================================== -->
