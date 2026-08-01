@@ -736,7 +736,7 @@ $total = mysqli_num_rows($query);
                                             </th>
 
                                             <th>
-                                                Nama Tamu & No. HP
+                                                Nama Tamu & HP
                                             </th>
 
                                             <th>
