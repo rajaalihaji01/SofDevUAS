@@ -1,5 +1,7 @@
 <?php
+session_start();
 include "../config/koneksi.php";
+include "../config/log_helper.php";
 $halaman = basename($_SERVER['PHP_SELF']);
 
 /* EDIT */
@@ -19,13 +21,22 @@ if(isset($_POST['edit'])){
     bertemu='$bertemu'
     WHERE id='$id'");
 
+    catat_log($conn, $_SESSION['user'] ?? 'admin', $_SESSION['role'] ?? 'admin', 'Edit Data', "Mengubah data tamu: $nama ($instansi)");
+
     header("Location: data_tamu.php");
 }
 
 /* HAPUS */
 if(isset($_GET['hapus'])){
     $id = $_GET['hapus'];
+
+    $cek = mysqli_fetch_assoc(mysqli_query($conn, "SELECT nama FROM tamu WHERE id='$id'"));
+    $nama_hapus = $cek['nama'] ?? '-';
+
     mysqli_query($conn,"DELETE FROM tamu WHERE id='$id'");
+
+    catat_log($conn, $_SESSION['user'] ?? 'admin', $_SESSION['role'] ?? 'admin', 'Hapus Data', "Menghapus data tamu: $nama_hapus");
+
     header("Location: data_tamu.php");
 }
 
@@ -33,6 +44,19 @@ $pegawai_list = [];
 $q_pegawai = mysqli_query($conn, "SELECT * FROM pegawai");
 while($p = mysqli_fetch_array($q_pegawai)) {
     $pegawai_list[] = $p;
+}
+
+/* ================= FILTER TANGGAL ================= */
+$tgl_awal  = isset($_GET['tgl_awal'])  ? mysqli_real_escape_string($conn, $_GET['tgl_awal'])  : '';
+$tgl_akhir = isset($_GET['tgl_akhir']) ? mysqli_real_escape_string($conn, $_GET['tgl_akhir']) : '';
+
+$where = "";
+if($tgl_awal != "" && $tgl_akhir != ""){
+    $where = "WHERE DATE(waktu_datang) BETWEEN '$tgl_awal' AND '$tgl_akhir'";
+} elseif($tgl_awal != ""){
+    $where = "WHERE DATE(waktu_datang) >= '$tgl_awal'";
+} elseif($tgl_akhir != ""){
+    $where = "WHERE DATE(waktu_datang) <= '$tgl_akhir'";
 }
 ?>
 
@@ -83,6 +107,30 @@ while($p = mysqli_fetch_array($q_pegawai)) {
         line-height: 32px;
         border-radius: 8px;
     }
+
+/* ===== SEARCH BOX ===== */
+.search-box{
+    position:relative;
+    width:260px;
+}
+.search-box input{
+    border-radius:50px;
+    padding-left:38px;
+    height:38px;
+    border:1px solid #dee2e6;
+    background:#fff;
+}
+.search-box input:focus{
+    box-shadow:0 0 0 2px rgba(30,58,138,.15);
+    border-color:#1e3a8a;
+}
+.search-box i{
+    position:absolute;
+    left:14px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#94a3b8;
+}
 
 /* ===== SIDEBAR ===== */
 .main-sidebar {
@@ -246,6 +294,15 @@ while($p = mysqli_fetch_array($q_pegawai)) {
                     </a>
                 </li>
 
+                <li class="nav-header">Sistem</li>
+
+                <li class="nav-item">
+                    <a href="log_activity.php" class="nav-link <?= ($halaman == 'log_activity.php') ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-list-alt"></i>
+                        <p>Log Activity</p>
+                    </a>
+                </li>
+
                 <li class="nav-item mt-4 pt-2 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
                     <a href="../auth/logout.php" class="nav-link text-danger">
                         <i class="nav-icon fas fa-power-off"></i>
@@ -259,12 +316,39 @@ while($p = mysqli_fetch_array($q_pegawai)) {
 
 <div class="content-wrapper">
     <div class="container-fluid pt-3">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="font-weight-bold">Daftar Kunjungan Tamu</h3>
-            <a href="input_tamu.php" class="btn btn-primary btn-sm rounded-pill px-3">
-                <i class="fas fa-plus mr-1"></i> Tambah Tamu
-            </a>
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap" style="gap:12px;">
+            <h3 class="font-weight-bold m-0">Daftar Kunjungan Tamu</h3>
+
+            <div class="d-flex align-items-center flex-wrap" style="gap:10px;">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="customSearch" class="form-control" placeholder="Cari nama, instansi, tujuan...">
+                </div>
+
+                <a href="input_tamu.php" class="btn btn-primary btn-sm rounded-pill px-3">
+                    <i class="fas fa-plus mr-1"></i> Tambah Tamu
+                </a>
+            </div>
         </div>
+
+        <form method="GET" class="date-filter d-flex align-items-center flex-wrap mb-3" style="gap:10px;">
+            <div class="d-flex align-items-center" style="gap:6px;">
+                <label class="m-0 small text-muted">Dari</label>
+                <input type="date" name="tgl_awal" value="<?= htmlspecialchars($tgl_awal) ?>" class="form-control form-control-sm rounded-pill">
+            </div>
+            <div class="d-flex align-items-center" style="gap:6px;">
+                <label class="m-0 small text-muted">Sampai</label>
+                <input type="date" name="tgl_akhir" value="<?= htmlspecialchars($tgl_akhir) ?>" class="form-control form-control-sm rounded-pill">
+            </div>
+            <button type="submit" class="btn btn-sm btn-dark rounded-pill px-3">
+                <i class="fas fa-filter mr-1"></i> Terapkan
+            </button>
+            <?php if($tgl_awal != "" || $tgl_akhir != ""){ ?>
+            <a href="data_tamu.php" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                <i class="fas fa-times mr-1"></i> Reset
+            </a>
+            <?php } ?>
+        </form>
 
         <div class="card border-0 shadow-sm">
             <div class="card-body">
@@ -283,7 +367,7 @@ while($p = mysqli_fetch_array($q_pegawai)) {
                     <tbody>
                         <?php
                         $no=1;
-                        $data = mysqli_query($conn,"SELECT * FROM tamu ORDER BY id DESC");
+                        $data = mysqli_query($conn,"SELECT * FROM tamu $where ORDER BY id DESC");
                         while($d=mysqli_fetch_array($data)){
                         ?>
                         <tr>
@@ -383,11 +467,12 @@ $(function () {
 </script>
 <script>
 $(document).ready(function() {
-    $("#tabelTamu").DataTable({
+    var tabelTamu = $("#tabelTamu").DataTable({
         "responsive": true,
         "lengthChange": true,
-        "searching": false,
+        "searching": true,
         "autoWidth": false,
+        "dom": '<"row"<"col-md-6"l>>rt<"row"<"col-md-6"i><"col-md-6"p>>',
         "language": {
             "lengthMenu": "Tampilkan _MENU_ baris",
             "info": "Menampilkan _START_ ke _END_ dari _TOTAL_ tamu",
@@ -396,6 +481,11 @@ $(document).ready(function() {
                 "next": "<i class='fas fa-angle-right'></i>"
             }
         }
+    });
+
+    // Search kustom terhubung ke DataTables
+    $('#customSearch').on('keyup', function () {
+        tabelTamu.search(this.value).draw();
     });
 });
 </script>

@@ -1,5 +1,7 @@
 <?php 
+session_start();
 include "config/koneksi.php";
+include "config/log_helper.php";
 
 $sukses = false;
 
@@ -13,6 +15,8 @@ if(isset($_POST['tambah'])){
     mysqli_query($conn,"INSERT INTO tamu 
     (nama,instansi,no_hp,tujuan,bertemu,waktu_datang) 
     VALUES('$nama','$instansi','$no_hp','$tujuan','$bertemu',NOW())");
+
+    catat_log($conn, $_SESSION['user'] ?? $nama, $_SESSION['role'] ?? 'tamu', 'Tambah Data', "Mengisi buku tamu untuk bertemu $bertemu ($instansi)");
 
     $sukses = true;
 }
@@ -50,6 +54,34 @@ body{
     font-weight:600;
     text-align:center;
     border-radius:15px 15px 0 0;
+    display:flex;
+    align-items:center;
+    position:relative;
+    padding:14px 20px;
+}
+
+.btn-logout{
+    position:absolute;
+    top:0;
+    right:0;
+    height:100%;
+    display:flex;
+    align-items:center;
+    background:rgba(0,0,0,.12);
+    color:white;
+    border:none;
+    border-left:1px solid rgba(255,255,255,.3);
+    border-radius:0 15px 0 0;
+    padding:0 20px;
+    font-size:13px;
+    font-weight:500;
+    text-decoration:none;
+    transition:.2s;
+}
+
+.btn-logout:hover{
+    background:rgba(0,0,0,.25);
+    color:white;
 }
 
 /* INPUT */
@@ -112,7 +144,10 @@ body{
 <div class="card">
 
 <div class="card-header">
-    <i class="fas fa-book"></i> Input Buku Tamu
+    <span><i class="fas fa-book"></i> Input Buku Tamu</span>
+    <a href="index.php" class="btn-logout" onclick="return confirm('Yakin ingin keluar?');">
+        <i class="fas fa-sign-out-alt"></i>&nbsp; Logout
+    </a>
 </div>
 
 <div class="card-body">
@@ -127,7 +162,7 @@ body{
 </div>
 
 <div class="text-center mb-3">
-    <a href="login.php" class="btn btn-primary">
+    <a href="index.php" class="btn btn-primary">
         ⬅ Back to Login Form
     </a>
 </div>

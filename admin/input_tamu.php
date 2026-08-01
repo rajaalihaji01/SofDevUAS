@@ -1,5 +1,7 @@
 <?php 
+session_start();
 include "../config/koneksi.php";
+include "../config/log_helper.php";
 $halaman = basename($_SERVER['PHP_SELF']);
 
 if(isset($_POST['tambah'])){
@@ -12,6 +14,8 @@ if(isset($_POST['tambah'])){
     mysqli_query($conn,"INSERT INTO tamu 
     (nama,instansi,no_hp,tujuan,bertemu,waktu_datang) 
     VALUES('$nama','$instansi','$no_hp','$tujuan','$bertemu',NOW())");
+
+    catat_log($conn, $_SESSION['user'] ?? 'admin', $_SESSION['role'] ?? 'admin', 'Tambah Data', "Mendaftarkan tamu: $nama ($instansi) untuk bertemu $bertemu");
 
     header("Location: data_tamu.php");
 }
@@ -217,6 +221,15 @@ $pegawai = mysqli_query($conn, "SELECT * FROM pegawai");
                     <a href="data_tamu.php" class="nav-link <?= ($halaman == 'data_tamu.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-address-book"></i>
                         <p>Daftar Tamu</p>
+                    </a>
+                </li>
+
+                <li class="nav-header">Sistem</li>
+
+                <li class="nav-item">
+                    <a href="log_activity.php" class="nav-link <?= ($halaman == 'log_activity.php') ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-list-alt"></i>
+                        <p>Log Activity</p>
                     </a>
                 </li>
 
