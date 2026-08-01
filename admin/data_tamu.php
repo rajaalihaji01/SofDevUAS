@@ -34,6 +34,19 @@ $q_pegawai = mysqli_query($conn, "SELECT * FROM pegawai");
 while($p = mysqli_fetch_array($q_pegawai)) {
     $pegawai_list[] = $p;
 }
+
+/* ================= FILTER TANGGAL ================= */
+$tgl_awal  = isset($_GET['tgl_awal'])  ? mysqli_real_escape_string($conn, $_GET['tgl_awal'])  : '';
+$tgl_akhir = isset($_GET['tgl_akhir']) ? mysqli_real_escape_string($conn, $_GET['tgl_akhir']) : '';
+
+$where = "";
+if($tgl_awal != "" && $tgl_akhir != ""){
+    $where = "WHERE DATE(waktu_datang) BETWEEN '$tgl_awal' AND '$tgl_akhir'";
+} elseif($tgl_awal != ""){
+    $where = "WHERE DATE(waktu_datang) >= '$tgl_awal'";
+} elseif($tgl_akhir != ""){
+    $where = "WHERE DATE(waktu_datang) <= '$tgl_akhir'";
+}
 ?>
 
 <!DOCTYPE html>
@@ -298,6 +311,25 @@ while($p = mysqli_fetch_array($q_pegawai)) {
             </div>
         </div>
 
+        <form method="GET" class="date-filter d-flex align-items-center flex-wrap mb-3" style="gap:10px;">
+            <div class="d-flex align-items-center" style="gap:6px;">
+                <label class="m-0 small text-muted">Dari</label>
+                <input type="date" name="tgl_awal" value="<?= htmlspecialchars($tgl_awal) ?>" class="form-control form-control-sm rounded-pill">
+            </div>
+            <div class="d-flex align-items-center" style="gap:6px;">
+                <label class="m-0 small text-muted">Sampai</label>
+                <input type="date" name="tgl_akhir" value="<?= htmlspecialchars($tgl_akhir) ?>" class="form-control form-control-sm rounded-pill">
+            </div>
+            <button type="submit" class="btn btn-sm btn-dark rounded-pill px-3">
+                <i class="fas fa-filter mr-1"></i> Terapkan
+            </button>
+            <?php if($tgl_awal != "" || $tgl_akhir != ""){ ?>
+            <a href="data_tamu.php" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                <i class="fas fa-times mr-1"></i> Reset
+            </a>
+            <?php } ?>
+        </form>
+
         <div class="card border-0 shadow-sm">
             <div class="card-body">
                 <table id="tabelTamu" class="table table-hover w-100">
@@ -315,7 +347,7 @@ while($p = mysqli_fetch_array($q_pegawai)) {
                     <tbody>
                         <?php
                         $no=1;
-                        $data = mysqli_query($conn,"SELECT * FROM tamu ORDER BY id DESC");
+                        $data = mysqli_query($conn,"SELECT * FROM tamu $where ORDER BY id DESC");
                         while($d=mysqli_fetch_array($data)){
                         ?>
                         <tr>
