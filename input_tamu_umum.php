@@ -144,7 +144,7 @@ body{
 <div class="card">
 
 <div class="card-header">
-    <span><i class="fas fa-book"></i> Input Buku Tamu (tes rollback)</span>
+    <span><i class="fas fa-book"></i> Input Buku Tamu</span>
     <a href="index.php" class="btn-logout" onclick="return confirm('Yakin ingin keluar?');">
         <i class="fas fa-sign-out-alt"></i>&nbsp; Logout
     </a>
