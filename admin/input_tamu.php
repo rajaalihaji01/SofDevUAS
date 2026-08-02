@@ -223,14 +223,12 @@ $pegawai = mysqli_query($conn, "SELECT * FROM pegawai");
                         <p>Daftar Tamu</p>
                     </a>
                 </li>
-<<<<<<< HEAD
                 <li class="nav-item">
                     <a href="laporan.php" class="nav-link <?= ($halaman == 'laporan.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-chart-line"></i>
                         <p>Laporan</p>
                     </a>
                 </li>
-=======
 
                 <li class="nav-header">Sistem</li>
 
@@ -241,7 +239,6 @@ $pegawai = mysqli_query($conn, "SELECT * FROM pegawai");
                     </a>
                 </li>
 
->>>>>>> develop
                 <li class="nav-item mt-4 pt-2 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
                     <a href="../auth/logout.php" class="nav-link text-danger">
                         <i class="nav-icon fas fa-power-off"></i>
